@@ -15,9 +15,9 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth' , ['except' => ['home']]);
     }    
-     
+
     /**
      * Display a listing of the resource.
      *
@@ -102,5 +102,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // comment function here
+    public function home() {
+        return View('product.home');
     }
 }
