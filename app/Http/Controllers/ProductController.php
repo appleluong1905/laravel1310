@@ -3,9 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+   
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }    
+     
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +26,8 @@ class ProductController extends Controller
     public function index()
     {
         //
+        $products = DB::table('products')->get();
+        return View('product.list', compact('products'));
     }
 
     /**
@@ -24,6 +38,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return View('product.add');
     }
 
     /**
@@ -35,6 +50,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $title = $request->title;
+        $price = $request->price;
+        DB::table('products')->insert(
+            ['title' => $title, 'price' => $price]
+        );
+        return redirect('list_product');
+
     }
 
     /**
